@@ -6,9 +6,9 @@ import {
 } from 'lucide-react';
 import axios from 'axios';
 
-// --- Navbar Wrapper ---
+
 import CrestlineNavbar from './CrestlineNavbar'; 
-// --- REUSABLE PIN MODAL ---
+
 import CrestlineTransactionPinModal from "./CrestlineTransactionPinModal";
 
 const CrestlineBillPay = () => {
@@ -17,14 +17,14 @@ const CrestlineBillPay = () => {
   const [packagePlan, setPackagePlan] = useState("");
   const [idNumber, setIdNumber] = useState("");
   
-  // Verification & Processing States
+  
   const [isVerifying, setIsVerifying] = useState(false);
   const [verifiedName, setVerifiedName] = useState(null);
   const [showPinModal, setShowPinModal] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
 
-  // Data Architecture
+
   const categories = [
     { id: 'cable', name: 'Cable Television', icon: <Tv size={18} /> },
     { id: 'power', name: 'Electricity / Power', icon: <Lightbulb size={18} /> },

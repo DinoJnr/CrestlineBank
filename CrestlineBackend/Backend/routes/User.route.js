@@ -27,8 +27,8 @@ const {
   repayLoan,
   extendLoan,
   getLoanState,
-
   processTierUpgrade,
+  createTicket
 } = require("../controllers/User.controller");
 
 router.post("/register", register);
@@ -52,12 +52,11 @@ router.post("/sporty-verify", protect, verifySportyAccount);
 router.post("/sporty-topup", protect, sportyWalletTopUp);
 router.post("/bill-verify", protect, verifyBillAccount);
 router.post("/bill-pay", protect, settleUtilityBill);
-
 router.post("/loan-request", protect, requestLoan);
 router.post("/loan-repay", protect, repayLoan);
 router.post("/loan-extend", protect, extendLoan);
 router.get("/loan-state", protect, getLoanState);
-
 router.post("/kyc-upgrade", protect, processTierUpgrade);
-
+router.post("/support/ticket", protect, createTicket);
+// router.get("/support/tickets", protect, getUserInquiries);
 module.exports = router;

@@ -11,7 +11,6 @@ const CrestlineNavbar = ({ children }) => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  // Matched exactly to your App.jsx routes
   const navItems = [
     { name: 'Home', icon: <Home size={22} />, path: '/user/dashboard' },
     { name: 'Profile', icon: <User size={22} />, path: '/user/profile' },
@@ -29,21 +28,18 @@ const CrestlineNavbar = ({ children }) => {
   return (
     <div className="min-h-screen bg-[#050505] text-white font-sans flex overflow-hidden w-full">
       
-      {/* --- DESKTOP SIDEBAR (DYNAMIC SMOOTH COLLAPSE/HOVER ENGINE) --- */}
-      <aside className="hidden lg:flex w-[76px] hover:w-72 flex-col bg-black border-r border-white/5 p-4 hover:p-6 sticky top-0 h-screen z-50 transition-all duration-300 ease-in-out group/sidebar overflow-hidden shrink-0">
+      <aside className="hidden lg:flex w-64 flex-col bg-black border-r border-white/5 p-6 sticky top-0 h-screen z-50 transition-all duration-300 ease-in-out overflow-hidden shrink-0">
         
-        {/* Brand Section */}
         <div 
-          className="flex items-center gap-4 mb-12 px-1 hover:px-2 cursor-pointer whitespace-nowrap overflow-hidden" 
+          className="flex items-center gap-4 mb-12 px-2 cursor-pointer whitespace-nowrap overflow-hidden" 
           onClick={() => navigate('/user/dashboard')}
         >
           <div className="h-8 w-8 bg-blue-600 rounded-lg shadow-[0_0_20px_rgba(37,99,235,0.4)] shrink-0" />
-          <span className="text-2xl font-black italic tracking-tighter uppercase opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 ease-in-out">
+          <span className="text-2xl font-black italic tracking-tighter uppercase transition-opacity duration-200 ease-in-out">
             Crestline
           </span>
         </div>
 
-        {/* Navigation Items */}
         <nav className="flex-1 space-y-2 overflow-y-auto no-scrollbar">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -59,14 +55,14 @@ const CrestlineNavbar = ({ children }) => {
               >
                 <div className="flex items-center gap-4 font-bold uppercase italic text-xs tracking-widest whitespace-nowrap overflow-hidden">
                   <div className="shrink-0">{item.icon}</div>
-                  <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 ease-in-out">
+                  <span className="transition-opacity duration-200 ease-in-out">
                     {item.name}
                   </span>
                 </div>
                 {isActive && (
                   <motion.div 
                     layoutId="activeInd" 
-                    className="w-1.5 h-1.5 bg-white rounded-full shrink-0 hidden group-hover/sidebar:block" 
+                    className="w-1.5 h-1.5 bg-white rounded-full shrink-0" 
                   />
                 )}
               </Link>
@@ -74,24 +70,21 @@ const CrestlineNavbar = ({ children }) => {
           })}
         </nav>
 
-        {/* Action Logout Block Footer */}
         <div className="mt-auto border-t border-white/5 pt-6 overflow-hidden">
           <button 
             onClick={handleLogout}
             className="w-full flex items-center gap-4 px-3.5 py-4 text-red-500 font-black italic uppercase text-xs tracking-widest hover:bg-red-500/10 rounded-2xl transition-all whitespace-nowrap"
           >
             <LogOut size={22} className="shrink-0" />
-            <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 ease-in-out hidden group-hover/sidebar:inline">
+            <span className="transition-opacity duration-200 ease-in-out inline">
               Sign Out
             </span>
           </button>
         </div>
       </aside>
 
-      {/* --- CONTENT WORKSPACE LAYER --- */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
-        {/* Mobile Header Structure */}
         <header className="lg:hidden flex justify-between items-center p-6 bg-black/50 backdrop-blur-xl border-b border-white/5 sticky top-0 z-40">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate('/user/dashboard')}>
             <div className="h-6 w-6 bg-blue-600 rounded" />
@@ -105,12 +98,10 @@ const CrestlineNavbar = ({ children }) => {
           </div>
         </header>
 
-        {/* --- SCROLLABLE BODY VIEW --- */}
         <main className="flex-1 overflow-y-auto pb-24 lg:pb-0">
           {children}
         </main>
 
-        {/* --- MOBILE BOTTOM NAV FRAMEWORK --- */}
         <nav className="lg:hidden fixed bottom-0 w-full bg-black/80 backdrop-blur-2xl border-t border-white/10 px-6 py-4 flex justify-around items-center z-40">
           <MobileBottomTab to="/user/dashboard" active={location.pathname === '/user/dashboard'} icon={<Home />} />
           <MobileBottomTab to="/user/profile" active={location.pathname === '/user/profile'} icon={<User />} />
@@ -127,7 +118,6 @@ const CrestlineNavbar = ({ children }) => {
         </nav>
       </div>
 
-      {/* --- MOBILE SLIDE-OUT OVERLAY SHEET --- */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <>
@@ -182,7 +172,6 @@ const CrestlineNavbar = ({ children }) => {
   );
 };
 
-// ─── BOTTOM NAVIGATION SUBCOMPONENT ─────────────────────────────────────────
 const MobileBottomTab = ({ active, icon, to }) => (
   <Link to={to} className={`p-2 transition-colors shrink-0 ${active ? 'text-blue-500' : 'text-zinc-600'}`}>
     {React.cloneElement(icon, { size: 24, strokeWidth: active ? 2.5 : 2 })}

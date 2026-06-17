@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const CardReplacement = require("../models/CardReplacement.model");
 const Settings = require("../models/Settings.model");
 const { blockIfRestricted } = require('../utils/accountRestrictions');
+const { PendingInquiry, ArchivedInquiry } = require("../models/Inquiry.model");
 
 const generateReference  = () => `CRST-${Math.floor(100000 + Math.random() * 900000)}`;
 const generateRef = (prefix = 'CT') =>
@@ -1358,3 +1359,46 @@ exports.processTierUpgrade = async (req, res) => {
     return res.status(500).json({ message: "Internal verification data channel error." });
   }
 };
+
+exports.createTicket = async (req, res) => {
+  try {
+    const { subject, message } = req.body;
+    const userId = req.user._id;
+
+    if (!subject || !message) {
+      return res.status(400).json({ success: false, message: "Missing required ticket parameters." });
+    }
+
+    const ticket = await PendingInquiry.create({
+      userId,
+      subject,
+      message
+    });
+
+    return res.status(201).json({
+      success: true,
+      message: "Ticket dispatched to queue.",
+      data: ticket
+    });
+  } catch (error) {
+    return res.status(500).json({ success: false, message: error.message });
+  }
+};
+
+// exports.getUserInquiries = async (req, res) => {
+//   try {
+//     const userId = req.user._id;
+
+//     const activeTickets = await PendingInquiry.find({ userId }).sort({ createdAt: -1 });
+//     const resolvedTickets = await ArchivedInquiry.find({ userId }).sort({ resolvedAt: -1 });
+
+//     return res.status(200).json({
+//       success: true,
+//       pending: activeTickets,
+//       archived: resolvedTickets
+//     });
+//   } catch (error) {
+//     return res.status(500).json({ success: false, message: error.message });
+//   }
+// };
+

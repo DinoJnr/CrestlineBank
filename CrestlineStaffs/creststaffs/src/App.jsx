@@ -8,10 +8,7 @@ import CrestlineStaffLogin from "./Component/CrestlineStaffLogin";
 import CrestlineStaffLayout from "./Component/CrestlineStaffLayout";
 import CrestlineStaffDashboard from "./Component/CrestlineStaffDashboard";
 import CrestlineUserManagement from "./Component/CrestlineUserManagement";
-import CrestlineUsermanagementinfo from "./Component/CrestlineUsermanagementinfo";
-import CrestlineUserFullstatement from "./Component/CrestlineUserFullstatement";
-import CrestlineCustomerView from "./Component/CrestlineCustomerView";
-import CrestlineLoanProcessing from "./Component/CrestlineLoanProcessing";
+import CrestlineInquiriesManagement from "./Component/CrestlineInquiriesManagement"
 
 // ── 1. PROTECTED ROUTE GUARDIAN COMPONENT ──────────────────────────
 const ProtectedRoute = ({ children }) => {
@@ -25,7 +22,7 @@ const ProtectedRoute = ({ children }) => {
   // Otherwise, render the requested component safely
   return children;
 };
-// ──────────────────────────────────────────────────────────────────
+
 
 function App() {
   const [count, setCount] = useState(0);
@@ -37,17 +34,11 @@ function App() {
           {/* Public Route (Login Screen) */}
           <Route path="/" element={<CrestlineStaffLogin />} />
 
-          {/* ── 2. ALL SECURED INTERNAL ROUTES ──────────────────────── */}
+          
           <Route path="/staff/navbar" element={<ProtectedRoute><CrestlineStaffLayout /></ProtectedRoute>} />
           <Route path="/staff/dashboard" element={<ProtectedRoute><CrestlineStaffDashboard /></ProtectedRoute>} />
           <Route path="/staff/user-management" element={<ProtectedRoute><CrestlineUserManagement /></ProtectedRoute>} />
-          <Route path="/staff/user" element={<ProtectedRoute><CrestlineUsermanagementinfo /></ProtectedRoute>} />
-          <Route path="/staff/fullstatement" element={<ProtectedRoute><CrestlineUserFullstatement /></ProtectedRoute>} />
-          <Route path="/staff/edituser" element={<ProtectedRoute><CrestlineCustomerView /></ProtectedRoute>} />
-          <Route path="/staff/loanproccessing" element={<ProtectedRoute><CrestlineLoanProcessing /></ProtectedRoute>} />
-          {/* ────────────────────────────────────────────────────────── */}
-
-          {/* Catch-all: Bounces any stray paths safely back to the login page */}
+         <Route path="/staff/inquries" element={<ProtectedRoute><CrestlineInquiriesManagement></CrestlineInquiriesManagement></ProtectedRoute>}></Route>
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </BrowserRouter>

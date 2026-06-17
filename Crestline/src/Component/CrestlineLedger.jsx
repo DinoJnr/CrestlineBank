@@ -177,7 +177,7 @@ const CrestlineLedger = () => {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${localStorage.getItem('crestline_token')}` // Dynamic validation check
+            'Authorization': `Bearer ${localStorage.getItem('crestline_token')}` 
           }
         });
 

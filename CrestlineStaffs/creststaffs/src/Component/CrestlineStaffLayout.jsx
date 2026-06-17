@@ -2,12 +2,9 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { 
-  LayoutDashboard, Users, CreditCard, 
-  ShieldCheck, Settings, LogOut, 
+  LayoutDashboard, Users, LogOut, 
   Menu, X, Bell, Search, 
-  CircleDot, ChevronRight, Briefcase,
-  Wallet, UserCheck, Database, FileText,
-  TrendingUp, CheckCircle2, Clock, MessageSquare
+  CircleDot, Briefcase, Clock
 } from 'lucide-react';
 
 const CrestlineStaffLayout = ({ children }) => {
@@ -18,12 +15,11 @@ const CrestlineStaffLayout = ({ children }) => {
   const navItems = [
     { name: 'Dashboard', icon: <LayoutDashboard size={20} />, path: '/staff/dashboard' },
     { name: 'User Management', icon: <Users size={20} />, path: '/staff/user-management' },
-    { name: 'Pending Inquiries', icon: <Clock size={20} />, path: '/staff/pending-inquiries' },
-    { name: 'Sorted Inquiries', icon: <MessageSquare size={20} />, path: '/staff/sorted-inquiries' },
+    { name: 'Inquiries', icon: <Clock size={20} />, path: '/staff/inquries' },
   ];
 
   const handleSignOut = () => {
-    localStorage.removeItem("crestline_token");
+    localStorage.removeItem("staffcrestline_token");
     localStorage.removeItem("staff_profile");
     navigate("/");
   };
@@ -31,21 +27,18 @@ const CrestlineStaffLayout = ({ children }) => {
   return (
     <div className="min-h-screen bg-[#F4F7F7] text-teal-950 font-sans flex overflow-hidden w-full">
       
-      {/* --- DESKTOP SIDEBAR (HOVER EXPANSION ENGINE) --- */}
-      <aside className="hidden lg:flex w-[76px] hover:w-72 flex-col bg-teal-950 p-4 hover:p-6 h-screen sticky top-0 shadow-[10px_0_40px_rgba(4,47,46,0.1)] shrink-0 z-50 transition-all duration-300 ease-in-out group/sidebar overflow-hidden">
+      <aside className="hidden lg:flex w-64 flex-col bg-teal-950 p-6 h-screen sticky top-0 shadow-[10px_0_40px_rgba(4,47,46,0.1)] shrink-0 z-50 transition-all duration-300 ease-in-out overflow-hidden">
         
-        {/* Brand Section */}
-        <div className="flex items-center gap-4 mb-10 px-1 hover:px-2">
+        <div className="flex items-center gap-4 mb-10 px-2">
           <div className="h-10 w-10 bg-teal-400 rounded-2xl flex items-center justify-center shadow-[0_0_20px_rgba(45,212,191,0.3)] shrink-0">
             <Briefcase size={22} className="text-teal-950" />
           </div>
-          <div className="flex flex-col opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 ease-in-out overflow-hidden whitespace-nowrap">
+          <div className="flex flex-col transition-opacity duration-200 ease-in-out overflow-hidden whitespace-nowrap">
             <span className="text-2xl font-black italic tracking-tighter uppercase text-white block leading-none">Crestline</span>
             <span className="text-[8px] font-black uppercase tracking-[0.4em] text-teal-400 mt-1">Staff Portal</span>
           </div>
         </div>
 
-        {/* Navigation Wrapper */}
         <nav className="flex-1 space-y-1 overflow-y-auto no-scrollbar">
           {navItems.map((item) => {
             const isActive = location.pathname === item.path;
@@ -61,25 +54,23 @@ const CrestlineStaffLayout = ({ children }) => {
               >
                 <div className="flex items-center gap-4 font-black uppercase italic text-[10px] tracking-[0.15em] whitespace-nowrap overflow-hidden">
                   <div className="shrink-0">{item.icon}</div>
-                  <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 ease-in-out">
+                  <span className="transition-opacity duration-200 ease-in-out">
                     {item.name}
                   </span>
                 </div>
                 {isActive && (
-                  <CircleDot size={12} className="animate-pulse shrink-0 hidden group-hover/sidebar:block" />
+                  <CircleDot size={12} className="animate-pulse shrink-0" />
                 )}
               </Link>
             );
           })}
         </nav>
 
-        {/* Staff Footer Card */}
         <div className="mt-6 pt-6 border-t border-white/5 space-y-4">
-          <div className="bg-white/5 rounded-[20px] p-3 group-hover/sidebar:p-4 transition-all duration-300 overflow-hidden whitespace-nowrap">
-            <p className="text-[8px] font-black text-teal-400 uppercase tracking-widest mb-1 hidden group-hover/sidebar:block">Session ID</p>
-            <p className="text-[10px] font-mono text-white/60 truncate text-center group-hover/sidebar:text-left">
-              <span className="group-hover/sidebar:hidden">PROD</span>
-              <span className="hidden group-hover/sidebar:inline">STF-8820-X9-PROD</span>
+          <div className="bg-white/5 rounded-[20px] p-4 transition-all duration-300 overflow-hidden whitespace-nowrap">
+            <p className="text-[8px] font-black text-teal-400 uppercase tracking-widest mb-1">Session ID</p>
+            <p className="text-[10px] font-mono text-white/60 truncate text-left">
+              <span>STF-8820-X9-PROD</span>
             </p>
           </div>
           <button 
@@ -88,17 +79,15 @@ const CrestlineStaffLayout = ({ children }) => {
             className="w-full flex items-center justify-center gap-2 py-3.5 bg-red-500/10 text-red-400 rounded-2xl font-black italic uppercase text-[10px] tracking-widest hover:bg-red-500 hover:text-white transition-all overflow-hidden whitespace-nowrap"
           >
             <LogOut size={16} className="shrink-0" /> 
-            <span className="opacity-0 group-hover/sidebar:opacity-100 transition-opacity duration-200 ease-in-out hidden group-hover/sidebar:inline">
+            <span className="transition-opacity duration-200 ease-in-out inline">
               Terminate Session
             </span>
           </button>
         </div>
       </aside>
 
-      {/* --- CONTENT AREA --- */}
       <div className="flex-1 flex flex-col min-w-0 h-screen overflow-hidden">
         
-        {/* TOP COMMAND BAR */}
         <header className="flex justify-between items-center px-6 md:px-10 py-5 bg-white border-b border-teal-900/5 sticky top-0 z-40">
           <div className="flex items-center gap-6">
             <button onClick={() => setIsMobileMenuOpen(true)} className="lg:hidden p-3 bg-teal-900/5 rounded-xl text-teal-950">
@@ -133,13 +122,11 @@ const CrestlineStaffLayout = ({ children }) => {
           </div>
         </header>
 
-        {/* SCROLLABLE BODY */}
         <main className="flex-1 overflow-y-auto p-6 md:p-10 relative bg-[#F4F7F7]">
           {children}
         </main>
       </div>
 
-      {/* --- MOBILE OVERLAY --- */}
       <AnimatePresence>
         {isMobileMenuOpen && (
           <motion.div 
